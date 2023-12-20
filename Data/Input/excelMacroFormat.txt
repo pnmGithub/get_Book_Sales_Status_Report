@@ -1,0 +1,192 @@
+'-----------------------------------------------------------------------------
+'    UiPath에서 함수 호출 시 파라미터 전달하기
+'    UiPath > Invoke VBA > 속성 > EntryMethodParameters > 리스트 형태로 전달
+'        사용예)  {"파라미터1", "파라미터2"...}  
+'        함수 파라미터 순서대로 넣어줘야 함
+'        셀 범위 설정할 때 A:A = A 전체, A1:A5 = A1부터 A5까지
+'-----------------------------------------------------------------------------
+
+' 시트 복사하기
+' > 작업폴더 엑셀파일 시트를 복사해서 원하는 시트에 써줄 예정
+'	- 작업폴더 > 중분류별 시트 -> 작업폴더 > 판매현황 시트에 쓰기 (합계 제외)
+'	- 작업폴더 > 중분류별 시트 -> 결과폴더 > 판매현황 시트 A1에 쓰기 (합계 포함)
+'	- 작업폴더 > 월별판매현황 시트 -> 결과폴더 > 판매현황 시트 K1에 쓰기 (합계 포함)
+Sub copySheetData(fromSheetName As String, toSheetName As String, isSumRowYN As String, toWriteFilePath As String, startWriteCell As String)
+	On Error Resume Next 			' 에러 발생 시 무시하고 계속 진행
+	
+	' 복사하려는 시트 정보
+	Dim fromSheet As Worksheet
+    	Dim fromRange As Range
+	Dim fromLastDataRowCnt As Long
+
+	' 붙여넣기 할 시트 정보
+	Dim toWorkbook As Workbook
+    	Dim toSheet As Worksheet
+    	Dim toRange As Range
+    	Dim toLastDataRowCnt As Long
+    	Dim i As Long, ii As Long
+
+    	' 원본 시트 및 범위 설정
+    	Set fromSheet = ThisWorkbook.Sheets(fromSheetName) ' 복사 하려는 시트
+    	Set fromRange = fromSheet.UsedRange		' 복사 하려는 데이터 (데이터가 있는 범위)
+	fromLastDataRowCnt = fromRange.Rows.Count
+
+    	' 복사 하려는 시트 > 빈 행 삭제
+	ii = 0
+    	For i = fromLastDataRowCnt To 1 Step -1
+        		If Application.WorksheetFunction.CountA(fromRange.Rows(i)) < 2 Then
+            			fromRange.Rows(i).Delete
+		Else
+			ii = ii+1
+        		End If
+    	Next i
+
+	' 복사 하려는 시트 > 빈 시트 삭제
+	fromLastDataRowCnt = ii
+	If fromLastDataRowCnt < 3 And fromSheetName <> "판매현황" And fromSheetName <> "월별판매현황"  Then	' 헤더와 합계만 있음. 빈시트 삭제 (판매현황, 월별판매현황 제외)
+		deleteSheet fromSheetName
+		'Exit Sub
+	Else
+    		' 대상 시트 및 범위 설정
+		If toWriteFilePath="" Then		'같은 파일 내에서 작업
+			Set toSheet = ThisWorkbook.Sheets(toSheetName)
+		Else
+			Set toWorkbook = Workbooks.Open(toWriteFilePath)     
+		    	Set toSheet = toWorkbook.Sheets(toSheetName) 	' 데이터를 쓰려는 시트
+		End If
+    		' toLastDataRowCnt = toSheet.UsedRange.Rows.Count	' 데이터를 쓰려는 시트의 데이터 마지막 행
+		
+		' 대상 시트 > 비지않은 행 갯수 구하기
+		ii = 0
+		If startWriteCell = "A" Then
+    			For i = 1 To toSheet.Range("A1:H"&toSheet.UsedRange.Rows.Count).Rows.Count
+        				If Application.WorksheetFunction.CountA(toSheet.Range("A1:H"&toSheet.UsedRange.Rows.Count).Rows(i)) > 0 Then
+           	 				ii = ii+1
+        				End If
+    			Next i
+		Else
+			For i = 1 To toSheet.Range("K1:N"&toSheet.UsedRange.Rows.Count).Rows.Count
+        				If Application.WorksheetFunction.CountA(toSheet.Range("K1:N"&toSheet.UsedRange.Rows.Count).Rows(i)) > 0 Then
+           	 				ii = ii+1
+        				End If
+    			Next i
+		End If
+		toLastDataRowCnt = ii
+
+		' 복사 하려는 시트 > 데이터 복사
+		If startWriteCell="A" Then
+			If isSumRowYN="Y" Then
+				fromSheet.Range("A2:Z" & fromLastDataRowCnt).Copy	'합계포함
+			Else
+				fromSheet.Range("A2:Z" & fromLastDataRowCnt-1).Copy	'합계제외
+			End IF
+		Else
+			If isSumRowYN="Y" Then
+				fromSheet.Range("A1:Z" & fromLastDataRowCnt).Copy	'합계포함
+			Else
+				fromSheet.Range("A1:Z" & fromLastDataRowCnt-1).Copy	'합계제외
+			End IF
+		End If
+	
+		toSheet.Range(startWriteCell & Cstr(toLastDataRowCnt+1)).PasteSpecial Paste:=xlPasteValues	'값 붙여넣기
+    		toSheet.Range(startWriteCell & Cstr(toLastDataRowCnt+1)).PasteSpecial Paste:=xlPasteFormats	'서식 붙여넣기
+
+		Application.CutCopyMode = False
+
+	End If
+
+	If toWriteFilePath <> "" Then
+		toWorkbook.SaveAs toWriteFilePath
+    		toWorkbook.Close
+	End If
+
+	If Err.Number <> 0 Then
+        		' 오류가 발생한 경우에 대한 처리
+        		Err.Clear ' 오류 정보를 초기화하여 다음 에러를 위해 준비
+    	End If
+
+	On Error GoTo 0
+End Sub
+
+' 엑셀 1행 남기고 모두 삭제 (결과>판매현황 쓰기 전에 처리)
+Sub deleteRowinSheet(sheetName)
+	On Error Resume Next 			' 에러 발생 시 무시하고 계속 진행
+
+	Dim deleteRowSheet As Worksheet
+    	Dim deleteRowRange As Range
+	Dim deleteRowLastDataRowCnt As Long
+	
+    	' 원본 시트 및 범위 설정
+    	Set deleteRowSheet = ThisWorkbook.Sheets(sheetName) ' 시트
+    	Set deleteRowRange = deleteRowSheet.UsedRange		' 데이터가 있는 범위
+	deleteRowLastDataRowCnt = deleteRowRange.Rows.Count
+
+	For i = deleteRowLastDataRowCnt To 2 Step -1
+        		deleteRowRange.Rows(i).Delete
+    	Next i
+
+	If Err.Number <> 0 Then
+        		' 오류가 발생한 경우에 대한 처리
+        		Err.Clear ' 오류 정보를 초기화하여 다음 에러를 위해 준비
+    	End If
+
+	On Error GoTo 0
+End Sub
+
+' 엑셀 시트 삭제
+Sub deleteSheet(delSheetName)
+	On Error Resume Next 			' 에러 발생 시 무시하고 계속 진행
+
+	Application.DisplayAlerts = False ' 삭제 경고를 표시하지 않도록 설정
+	Sheets(delSheetName).Select
+    	ActiveWindow.SelectedSheets.Delete
+	Application.DisplayAlerts = True ' 삭제 경고를 표시하지 않도록 설정
+
+	If Err.Number <> 0 Then
+        		' 오류가 발생한 경우에 대한 처리
+        		Err.Clear ' 오류 정보를 초기화하여 다음 에러를 위해 준비
+    	End If
+
+	On Error GoTo 0
+End Sub
+
+' 서식 테두리 넣기
+Sub setBorders(sheetName, borderRange)
+	On Error Resume Next 			' 에러 발생 시 무시하고 계속 진행
+	
+	Dim ws As Worksheet
+	Set ws = ThisWorkbook.Sheets(sheetName)
+	ws.UsedRange.Columns.AutoFit		'Excel Cell 가로사이즈 자동 처리
+
+	With ws.Range(borderRange).Borders
+		.LineStyle = xlContinuous ' 테두리 스타일 설정
+		.Weight = xlThin ' 테두리 두께 설정
+		.ColorIndex = xlAutomatic ' 테두리 색 설정
+	end With
+
+	If Err.Number <> 0 Then
+        		' 오류가 발생한 경우에 대한 처리
+        		Err.Clear ' 오류 정보를 초기화하여 다음 에러를 위해 준비
+    	End If
+
+	On Error GoTo 0
+End Sub
+
+' 엑셀 시트명 변경하기
+Sub chgSheetName(preSheetName, newSheetName)
+	On Error Resume Next 			' 에러 발생 시 무시하고 계속 진행
+	
+	Dim ws As Worksheet
+	Set targetSheet = Worksheets(preSheetName)
+	
+	If Not targetSheet Is Nothing Then		' 변경할 시트명 있으면 처리
+		targetSheet.Name = newSheetName
+	End If
+
+	If Err.Number <> 0 Then
+        		' 오류가 발생한 경우에 대한 처리
+        		Err.Clear ' 오류 정보를 초기화하여 다음 에러를 위해 준비
+    	End If
+
+	On Error GoTo 0
+End Sub

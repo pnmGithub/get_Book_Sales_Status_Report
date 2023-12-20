@@ -1,0 +1,304 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="SetExpenseReportExcel" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_dicExcelReadData" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+  </x:Members>
+  <this:SetExpenseReportExcel.in_dicExcelReadData>
+    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" />
+  </this:SetExpenseReportExcel.in_dicExcelReadData>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>808,1638.4</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>SetExpenseReportExcel_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>Microsoft.Win32.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Text.RegularExpressions</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Forms</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Linq.Parallel</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>System.Linq.Queryable</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.Watcher</AssemblyReference>
+      <AssemblyReference>System.IO.Packaging</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.ViewModels</AssemblyReference>
+      <AssemblyReference>System.CodeDom</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="도서판매현황 파일 작성&#xA;OOOO년_상반기_도서판매현황.xlsx&#xA;&#xA;1. 도서판매현황 작업 파일명 세팅&#xA;2. 도서판매현황 작업 엑셀파일 생성 - 작업파일 없으면 도서판매현황_Template.xlsx Copy&#xA;3. 도서판매현황 작업 파일에 데이터 쓰기" DisplayName="SetExpenseReportExcel" sap:VirtualizedContainerService.HintSize="712,1573.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="strMonthGubun" />
+      <Variable x:TypeArguments="x:String" Name="strWorkFileName" />
+      <Variable x:TypeArguments="x:Boolean" Name="isWorkFileExists" />
+      <Variable x:TypeArguments="ui:WorkbookApplication" Name="wsWorkFile" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtExpenseReportData" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <If Condition="[in_dicExcelReadData isNot Nothing]" DisplayName="Dictionary 데이터가 있으면 - If" sap:VirtualizedContainerService.HintSize="649.6,2447.2" sap2010:WorkflowViewState.IdRef="If_7">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="616,2264" sap2010:WorkflowViewState.IdRef="Sequence_19">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence sap2010:Annotation.AnnotationText="Dictionary 데이터로 작업 파일명 세팅&#xA;판매월=1~6월 상반기, 7~12월 하반기" DisplayName="도서판매현황 작업 파일명 세팅 - Sequence" sap:VirtualizedContainerService.HintSize="572.8,803.2" sap2010:WorkflowViewState.IdRef="Sequence_18">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[Cdate(in_dicExcelReadData(&quot;판매월&quot;).ToString+&quot;01&quot;).Month()&lt;=6]" DisplayName="판매월 1~6월이면 If" sap:VirtualizedContainerService.HintSize="510.4,525.6" sap2010:WorkflowViewState.IdRef="If_10">
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="476.8,171.2" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign DisplayName="strMonthGubun 상반기 - Assign" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_13">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[strMonthGubun]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">상반기</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence sap:VirtualizedContainerService.HintSize="476.8,171.2" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign DisplayName="strMonthGubun 하반기 - Assign" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_14">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[strMonthGubun]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">하반기</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </If.Else>
+            </If>
+            <Assign DisplayName="strWorkFileName - Assign" sap:VirtualizedContainerService.HintSize="510.4,81.6" sap2010:WorkflowViewState.IdRef="Assign_15">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[strWorkFileName]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[String.Format(in_Config("strWorkFileName").ToString, left(in_dicExcelReadData("판매월").ToString, 5), strMonthGubun)]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+          <Sequence sap2010:Annotation.AnnotationText="작업파일명 없으면 템플릿파일 Copy하기" DisplayName="도서판매현황 작업 엑셀파일 생성 - Sequence" sap:VirtualizedContainerService.HintSize="572.8,114.4" sap2010:WorkflowViewState.IdRef="Sequence_21">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:PathExists Resource="{x:Null}" DisplayName="작업파일명 체크 - Path Exists" Exists="[isWorkFileExists]" sap:VirtualizedContainerService.HintSize="445.6,116" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="[path.Combine(in_Config(&quot;strWorkFolderPath&quot;).ToString, strWorkFileName)]" PathType="File" />
+            <If sap2010:Annotation.AnnotationText="작업파일 없으면 도서판매현황_Template 파일 Copy하기" Condition="[Not isWorkFileExists]" DisplayName="작업파일 없으면 - If" sap:VirtualizedContainerService.HintSize="445.6,459.2" sap2010:WorkflowViewState.IdRef="If_8">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="376.8,244.8" sap2010:WorkflowViewState.IdRef="Sequence_22">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:CopyFile ContinueOnError="{x:Null}" Destination="[path.Combine(in_Config(&quot;strWorkFolderPath&quot;).ToString, strWorkFileName)]" DisplayName="집행품의서_Template - Copy File" sap:VirtualizedContainerService.HintSize="333.6,155.2" sap2010:WorkflowViewState.IdRef="CopyFile_1" Path="[path.Combine(in_Config(&quot;strExtractedFolder&quot;).ToString, in_Config(&quot;strWorkFileTemplate&quot;).ToString)]" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence sap2010:WorkflowViewState.IdRef="Sequence_23" />
+              </If.Else>
+            </If>
+          </Sequence>
+          <Sequence DisplayName="도서판매현황 작업파일에 데이터 쓰기 - Sequence" sap:VirtualizedContainerService.HintSize="572.8,1176.8" sap2010:WorkflowViewState.IdRef="Sequence_26">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:ExcelApplicationScope Password="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="도서판매현황 작업 파일 - Excel Application Scope" sap:VirtualizedContainerService.HintSize="483.2,1064.8" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_3" InstanceCachePeriod="3000" Workbook="[wsWorkFile]" WorkbookPath="[path.Combine(in_Config(&quot;strWorkFolderPath&quot;).ToString, strWorkFileName)]">
+              <ui:ExcelApplicationScope.Body>
+                <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,955.2" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:ExcelReadRange AddHeaders="True" DataTable="[dtExpenseReportData]" DisplayName="도서판매현황 데이터 - Read Range" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_2" SheetName="[in_dicExcelReadData(&quot;중분류&quot;).ToString]">
+                      <ui:ExcelReadRange.Range>
+                        <InArgument x:TypeArguments="x:String">
+                          <Literal x:TypeArguments="x:String" Value="" />
+                        </InArgument>
+                      </ui:ExcelReadRange.Range>
+                    </ui:ExcelReadRange>
+                    <ui:FilterDataTable sap2010:Annotation.AnnotationText="&quot;중분류&quot; 컬럼이 빈값이면 삭제&#xA;- 마지막 합계 영역도 삭제됨 (품의내역이 100건이 안된다는 조건이어야함)" DataTable="[dtExpenseReportData]" DisplayName="Filter Data Table in dtExpenseReportData" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="387.2,222.4" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[dtExpenseReportData]" SelectColumnsMode="Remove">
+                      <ui:FilterDataTable.Filters>
+                        <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                          <ui:FilterOperationArgument Operand="{x:Null}" BooleanOperator="And" Operator="EMPTY">
+                            <ui:FilterOperationArgument.Column>
+                              <InArgument x:TypeArguments="x:String">["중분류"]</InArgument>
+                            </ui:FilterOperationArgument.Column>
+                          </ui:FilterOperationArgument>
+                        </scg:List>
+                      </ui:FilterDataTable.Filters>
+                      <ui:FilterDataTable.SelectColumns>
+                        <scg:List x:TypeArguments="InArgument" Capacity="4">
+                          <x:Null />
+                        </scg:List>
+                      </ui:FilterDataTable.SelectColumns>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:FilterDataTable>
+                    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{in_dicExcelReadData(&quot;대분류&quot;).ToString, in_dicExcelReadData(&quot;중분류&quot;).ToString, in_dicExcelReadData(&quot;소분류&quot;).ToString, in_dicExcelReadData(&quot;제목&quot;).ToString, in_dicExcelReadData(&quot;가격&quot;).ToString, in_dicExcelReadData(&quot;판매월&quot;).ToString, in_dicExcelReadData(&quot;판매부수&quot;), (CInt(in_dicExcelReadData(&quot;판매부수&quot;)) * CInt(in_dicExcelReadData(&quot;가격&quot;))) }]" DataTable="[dtExpenseReportData]" DisplayName="Add Data Row in dtExpenseReportData" sap:VirtualizedContainerService.HintSize="387.2,188" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+                    <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtExpenseReportData]" DisplayName="도서판매현황 데이터 쓰기 - Write Range" sap:VirtualizedContainerService.HintSize="387.2,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="[in_dicExcelReadData(&quot;중분류&quot;).ToString]" StartingCell="A2" />
+                    <ui:ExcelSaveWorkbook DisplayName="도서판매현황 작업파일 저장 - Save Workbook" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="ExcelSaveWorkbook_2" />
+                    <ui:ExcelCloseWorkbook DisplayName="도서판매현황 작업파일 닫기 - Close Workbook" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_2" Workbook="[wsWorkFile]" />
+                  </Sequence>
+                </ActivityAction>
+              </ui:ExcelApplicationScope.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ExcelApplicationScope>
+          </Sequence>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="300,82.4" sap2010:WorkflowViewState.IdRef="Sequence_20">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Sequence>
+      </If.Else>
+    </If>
+  </Sequence>
+</Activity>
